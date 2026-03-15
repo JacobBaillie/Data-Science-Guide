@@ -26,6 +26,77 @@ For large enough n, the **distribution of sample means** will approach normal, r
 
 ---
 
+## Distributions
+
+### CDF and PDF
+
+| Function | Definition | Use |
+|----------|-----------|-----|
+| **CDF** — `F_Z(z) = P(Z < z)` | Cumulative probability up to z | Binomial analysis, percentiles |
+| **PDF** — `f_Z(z) = d/dz F_Z(z)` | Probability density at z | Finding E via `E = ∫ z·f_Z(z) dz` |
+
+> If you know the PDF, you can solve for E directly: `E = ∫ z·f(z) dz`
+
+### Gaussian (Normal)
+Normal distribution full defined by the mean and variance
+
+|Parameter|Definition|
+|---|---|
+| **Mean** | μ |
+| **Variance** | σ² |
+| **PDF** | `f(x) = 1/(σ·√(2π)) · exp[−½·((x−μ)/σ)²]` |
+
+### Binomial
+Models the number of successes in n independent trials, each with success probability p.
+
+|Parameter|Definition|
+|---|---|
+| **Mean** | `μ = n·p` |
+| **Variance by params** | `σ² = n·p·(1−p)` |
+| **Variance by mean** | `σ² = μ·(1−p)` — always **less than** μ |
+| **PMF** | `P(X=k) = C(n,k) · pᵏ · (1−p)^(n−k)` | 
+- PMF is probability of getting k successes in n trials for success probability p for each trial
+- `Variance = n · p · (1 − p)` — always **less than** mean
+- PDF is always symmetric about the mean
+- As n→∞ and p→0 with np=λ fixed, converges to Poisson
+
+### Poisson
+Models **count frequency** for pure independent event statistics.
+
+|Parameter|Definition|
+|---|---|
+| **Mean** | `μ = λ` — expected freq |
+| **Variance by params** | `σ² = λ` |
+| **Variance by mean** | `σ² = μ` — variance equals mean exactly |
+| **PMF** | `P(X=k) = λᵏ · e^(−λ) / k!` |
+- PMF is probability of getting k counts based on the expected counts (λ) which scales exponentially with desired number. e term normalizes, k! term removes favor for combinatorials
+- Is just na transformation of the binomial form by taking the limits of large number of trials (eg infinite time steps), small p (most time steps have no event), and np = λ (contant success rate)
+- `Variance = Mean`
+- **Overdispersion**: variance is too large for a Poisson; caused by hidden variables, excess zeros, clustering, human factors, etc. Poisson is usually not practical.
+
+#### Quasi-Poisson
+Adds a dispersion factor to adjust for slight overdispersion when the data is  **close to Poisson** but not quite due to other variables.
+|Parameter|Definition|
+|---|---|
+| **Variance by params** | `σ² = φ·λ` |
+| **Variance by mean** | `σ² = φ·μ` — variance is greater than the mean |
+
+### Negative Binomial
+Allows variance to increase faster than the mean: `Variance = mean + α · mean^k`
+
+|Parameter|Definition|
+|---|---|
+| **Mean** | `μ = r·(1−p)/p` — required successes r for probability p of each event. If working with actual data, just calculate μ directly instead. |
+| **Variance by params** | `σ² = r·(1−p)/p²` |
+| **Variance by mean** | `σ² = μ + α·μ²` where `α = 1/r` |
+| **PMF** | `P(X=k) = C(k+r−1, k) · pʳ · (1−p)ᵏ` |
+- PMF is the probability of getting r successes before failing r times. Very similar to the binomial form, except now r is defined separately and **r is constrained instead of n**
+- `Variance = n · p · (1 − p)` — always **less than** mean
+- PDF looks like Poisson but shifted right
+- Better choice than Quasi-Poisson for heavier overdispersion
+
+---
+
 ## Variance and Standard Deviation
 
 ```
@@ -37,7 +108,7 @@ Variance = SUM((value − mean)²) / n
 Std dev  = √(SUM((value − mean)²) / n)
 ```
 
-### Deeper Definition
+### Explicit Definition
 
 ```
 Var(X) = E[(X − E[X])²]
@@ -51,10 +122,16 @@ Number of standard deviations a value falls from the expected value / mean.
 
 ---
 
-## Regression
+## Regression, Modeling, and Inference
 
 ### Linear Regression (OLS — Ordinary Least Squares)
-Minimizes the sum of squared residuals.
+Minimize the sum of squared residuals. Choose a specific distribution then minimize this residual.
+
+**Assumptions:**
+- X and Y have a linear relationship
+- Y is normally distributed
+- Residuals have constant variance (homoscedasticity)
+- All data points are independent
 
 ### Lasso (L1 Regularization)
 Adds penalty `α · |slope|` to OLS. Can drive irrelevant variable slopes all the way to **zero**, effectively removing them from the model. Use when many variables are likely extraneous.
@@ -69,57 +146,14 @@ Adds penalty `α · slope²` to OLS. Shrinks correlated variables but **never fu
 ### Logistic Regression
 Predicts binary outcomes (0 or 1) based on a single variable threshold. Validate by checking for stable error and realistic results.
 
+### Difference-in-Differences
+Quantify the actual effect of a change by comparing at least two samples before and after the change (e.g. beta testers vs regular users before and after the change).
+Use when A/B is not possible.
 
 **Assumptions:**
-- X and Y have a linear relationship
-- Y is normally distributed
-- Residuals have constant variance (homoscedasticity)
-- All data points are independent
-
-*For regularized variants (Lasso, Ridge) and other modeling techniques, see `machine_learning.md`.*
-
----
-
-## Distributions
-
-### Gaussian (Normal)
-
-```
-f(x) = 1/(σ·√(2π)) · exp[−½·((x−μ)²/σ²)]
-```
-
-Defined by mean (μ) and variance (σ²).
-
-### CDF and PDF
-
-| Function | Definition | Use |
-|----------|-----------|-----|
-| **CDF** — `F_Z(z) = P(Z < z)` | Cumulative probability up to z | Binomial analysis, percentiles |
-| **PDF** — `f_Z(z) = d/dz F_Z(z)` | Probability density at z | Finding E via `E = ∫ z·f_Z(z) dz` |
-
-> If you know the PDF, you can solve for E directly: `E = ∫ z·f(z) dz`
-
-### Compounding Interest
-
-*(section to be expanded)*
-
-### Binomial
-Pure success/fail statistics.
-- `Variance = n · p · (1 − p)` — always **less than** mean
-- PDF is always symmetric about the mean
-
-### Poisson
-Models **count frequency** for independent events.
-- `Variance = Mean`
-- **Overdispersion**: variance is too large for a Poisson; caused by hidden variables, excess zeros, clustering, human factors, etc.
-
-### Quasi-Poisson
-Adds a dispersion factor to adjust for slight overdispersion when the data is close to Poisson but not quite.
-
-### Negative Binomial
-Allows variance to increase faster than the mean: `Variance = mean + α · mean^k`
-- PDF looks like Poisson but shifted right
-- Better choice than Quasi-Poisson for heavier overdispersion
+- The two subpopulations have parallel trends after accounting for confounders 
+- All confounders are observed (else a confounder may explain the result instead)
+- Covariates span both subpopulations (else they cannot be modeled)
 
 ---
 
