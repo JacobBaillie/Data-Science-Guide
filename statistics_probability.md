@@ -174,6 +174,9 @@ e.g. education seems to increase salary, but it is confounded by individual abil
 Instead, find a variable that affects education but it random for each person: birth month
 Summer birthdays stay in school longer, but do not earn more
 
+### Meta-leaners
+If you want to determine which subgroups respond better to a treatment
+
 ---
 
 ## Business Metrics
