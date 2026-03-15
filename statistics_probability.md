@@ -51,6 +51,21 @@ Number of standard deviations a value falls from the expected value / mean.
 
 ---
 
+## Regression
+
+### Linear Regression (OLS — Ordinary Least Squares)
+Minimizes the sum of squared residuals.
+
+**Assumptions:**
+- X and Y have a linear relationship
+- Y is normally distributed
+- Residuals have constant variance (homoscedasticity)
+- All data points are independent
+
+*For regularized variants (Lasso, Ridge) and other modeling techniques, see `machine_learning.md`.*
+
+---
+
 ## Distributions
 
 ### Gaussian (Normal)
@@ -73,6 +88,24 @@ Defined by mean (μ) and variance (σ²).
 ### Compounding Interest
 
 *(section to be expanded)*
+
+### Binomial
+Pure success/fail statistics.
+- `Variance = n · p · (1 − p)` — always **less than** mean
+- PDF is always symmetric about the mean
+
+### Poisson
+Models **count frequency** for independent events.
+- `Variance = Mean`
+- **Overdispersion**: variance is too large for a Poisson; caused by hidden variables, excess zeros, clustering, human factors, etc.
+
+### Quasi-Poisson
+Adds a dispersion factor to adjust for slight overdispersion when the data is close to Poisson but not quite.
+
+### Negative Binomial
+Allows variance to increase faster than the mean: `Variance = mean + α · mean^k`
+- PDF looks like Poisson but shifted right
+- Better choice than Quasi-Poisson for heavier overdispersion
 
 ---
 
