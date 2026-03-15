@@ -56,6 +56,20 @@ Number of standard deviations a value falls from the expected value / mean.
 ### Linear Regression (OLS — Ordinary Least Squares)
 Minimizes the sum of squared residuals.
 
+### Lasso (L1 Regularization)
+Adds penalty `α · |slope|` to OLS. Can drive irrelevant variable slopes all the way to **zero**, effectively removing them from the model. Use when many variables are likely extraneous.
+
+*"The lasso catches weak animals and removes them."*
+
+### Ridge (L2 Regularization)
+Adds penalty `α · slope²` to OLS. Shrinks correlated variables but **never fully removes** them. Use when multiple X's are correlated and credit needs to be shared.
+
+*"Sitting on a ridge — the penalty prevents any one variable from dominating the valley."*
+
+### Logistic Regression
+Predicts binary outcomes (0 or 1) based on a single variable threshold. Validate by checking for stable error and realistic results.
+
+
 **Assumptions:**
 - X and Y have a linear relationship
 - Y is normally distributed
