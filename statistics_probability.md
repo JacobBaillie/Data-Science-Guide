@@ -149,11 +149,30 @@ Predicts binary outcomes (0 or 1) based on a single variable threshold. Validate
 ### Difference-in-Differences
 Quantify the actual effect of a change by comparing at least two samples before and after the change (e.g. beta testers vs regular users before and after the change).
 Use when A/B is not possible.
+**Validate causal effect:** correlate possible mediators with the overall effect then quantify the extent to which reasonable mediators explain the causal effect. Majoiry of the effect should be explainmable by reasonable mediators (eg web design change boosting sales is strongly mediated by faster time to check out would be a validation; mediation by instead increased initial site visits from instagram indicates a confounder perhaps due to other ad changes at the same time)  
+**Verify robustness:** Alter model parameters or method of how a variable is measured (eg number of chars vs number of words or metnion of specific words).
 
 **Assumptions:**
-- The two subpopulations have parallel trends after accounting for confounders 
+- The two subpopulations have parallel trends after accounting for confounders; verify via visualization EDA
 - All confounders are observed (else a confounder may explain the result instead)
 - Covariates span both subpopulations (else they cannot be modeled)
+
+### Propensity Score Matching
+If we suspect that the treatment group is **systematically more likely to be affected** by the treatment than the control group, must find this effect.
+e.g. we added luxury brand ads, but rich people will see these ads more often and we know rich people spend more money, so the ad will seemingly be successful, but only because ads are always more succesfull when a rich person sees it.
+We should quantify the propensity (likelyhood of recieving treatment based on all the other variables).
+Then we match up the data to avoid difference in propensity eg for every rich person who saw the luxury ad, we need a rich person who saw the regular ad. Clip the extra data points.
+
+### Synthetic Control
+If we can choose groups to recieve treatment like an entire country, we can avoid propensity bias.
+Assume eg people in WA and OR behaive similar enough that we can deploy the add by region to test the effect.
+
+
+### Instrumental Variables
+Use a variable that is immune to a problematic confounder
+e.g. education seems to increase salary, but it is confounded by individual ability, IQ, etc
+Instead, find a variable that affects education but it random for each person: birth month
+Summer birthdays stay in school longer, but do not earn more
 
 ---
 
