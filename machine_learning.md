@@ -23,47 +23,6 @@ Harmonic mean of precision and recall — penalizes extreme imbalance between th
 
 ---
 
-## Regression Types
-
-### Linear Regression (OLS — Ordinary Least Squares)
-Minimizes the sum of squared residuals.
-
-**Assumptions:**
-- X and Y have a linear relationship
-- Y is normally distributed
-- Residuals have constant variance (homoscedasticity)
-- All data points are independent
-
-**Variants:**
-
-| Variant | Penalty | Effect |
-|---------|---------|--------|
-| **Lasso (L1)** | `α · |slope|` | Can drive irrelevant variable slopes all the way to zero — effectively removes them. *"The lasso catches weak animals and removes them."* |
-| **Ridge (L2)** | `α · slope²` | Shrinks correlated variables but never fully removes them. Good when multiple X's are correlated. *"Sitting on a ridge — the penalty prevents any one variable from dominating the valley."* |
-
-### Logistic Regression
-Predicts binary outcomes (0 or 1). Checks whether a single variable threshold is meaningful. Validate by checking for stable error and realistic results.
-
-### Poisson Regression
-Predicts **count frequency** for independent events.
-- `Variance = Mean`
-- **Overdispersion**: variance is too large for a Poisson; caused by hidden variables, excess zeros, clustering, human factors, etc.
-
-### Quasi-Poisson
-Adds a dispersion factor to the Poisson to accommodate slight overdispersion.
-
-### Negative Binomial
-Allows variance to increase faster than the mean: `Variance = mean + α · mean^k`
-- PDF looks like Poisson but shifted right
-- Better than Quasi-Poisson for heavy overdispersion
-
-### Binomial
-Pure success/fail statistics.
-- `Variance = n · p · (1 − p)` — always less than mean
-- PDF is always symmetric about the mean
-
----
-
 ## Models
 
 ### Principal Component Analysis (PCA)
@@ -149,11 +108,3 @@ Tune by varying the number of variables considered at each split until OOB error
 | **OOB** | Out-of-bag (data not used in a given bootstrap sample) |
 
 ---
-
-## My Project Examples
-
-### Time-Resolved Data
-
-**Situation:** Extract signal despite poor SNR, large data volume, drift, artifacts, and hidden signals (IRF); computationally expensive.
-
-*(expand with approach and outcomes)*
