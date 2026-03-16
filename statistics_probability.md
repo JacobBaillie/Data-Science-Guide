@@ -100,8 +100,10 @@ Allows variance to increase faster than the mean: `Variance = mean + α · mean^
 ## Variance and Standard Deviation
 
 ```
-Variance (σ²)  = n·p·(1−p)         # binomial
+Variance in the data points (σ²)  = n·p·(1−p)         # binomial
 Std dev  (σ)   = √(variance)
+Variance in the calculated mean percentage for the sample = σ²/n² (= p·(1−p) / n for binomial)
+Margin of error of the calcualted mean percentage for the sample = σ/n =  (= √(p·(1−p) / n) for binomial)
 
 # From a sample:
 Variance = SUM((value − mean)²) / n
@@ -117,8 +119,12 @@ Var(X) = E[(X − E[X])²]
 
 > The average of squared values is larger than the square of the average — squaring first amplifies large values more than averaging first does.
 
-### z-score
-Number of standard deviations a value falls from the expected value / mean.
+### z-score and t-score
+Number of standard deviations (or std errors) a value falls from the expected value / mean.
+for population stats simply use the known population mean and std dev: z = (x - pop mean) / pop std dev
+for sample stats in which we want to judge accuracy vs known pop mean: find the std error (margin of error) compare to the error in question : z = (x - pop mean) / sample std dev or error
+recall, sample standard error = σ/n (= √(p·(1−p) / n) for binomial)
+for for sample stats in which we want to judge accuracy of calc mean (unknown pop mean): t = x - pop mean
 
 ---
 
