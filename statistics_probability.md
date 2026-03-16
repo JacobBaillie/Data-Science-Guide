@@ -100,10 +100,17 @@ Allows variance to increase faster than the mean: `Variance = mean + α · mean^
 ## Variance and Standard Deviation
 
 ```
-Variance in the data points (σ²)  = n·p·(1−p)         # binomial
+Variance of single trial = p(1-p)
+       What is the uncertainty of a single coin falling heads? = 0.25
+Variance of the mean counts of n trials once = n·p·(1-p)
+       If we flip 100 coins, how much on average will the number of heads vary from 50? = 25 (std dev = 5)
+Variance in the mean proportion of n trials many times (σ²)  = p·(1−p)/n
+       If we flip 100 coins repeatedly, by how much will the proportion of heads vary from 50%? = 0.25% (std dev = 5%)
+Literally, when we use count variance, we are summing [variance from each trial] = 100 * 0.25 in this case
+Similarly, when we use proportion variance, we are defining the percent contribution one trial to the full percent variance: (variance / n) / n
+       Because variance is total variance in counts, var / n is total percent variance and var/n/n is single trial percent variacnce contribution
 Std dev  (σ)   = √(variance)
-Variance in the calculated mean percentage for the sample = σ²/n² (= p·(1−p) / n for binomial)
-Margin of error of the calcualted mean percentage for the sample = σ/n =  (= √(p·(1−p) / n) for binomial)
+Margin of error is just std dev (or std error) for a sample being used to estimate the true population mean.
 
 # From a sample:
 Variance = SUM((value − mean)²) / n
@@ -117,14 +124,16 @@ Var(X) = E[(X − E[X])²]
        = E[X²] − (E[X])²
 ```
 
-> The average of squared values is larger than the square of the average — squaring first amplifies large values more than averaging first does.
-
 ### z-score and t-score
-Number of standard deviations (or std errors) a value falls from the expected value / mean.
-for population stats simply use the known population mean and std dev: z = (x - pop mean) / pop std dev
-for sample stats in which we want to judge accuracy vs known pop mean: find the std error (margin of error) compare to the error in question : z = (x - pop mean) / sample std dev or error
-recall, sample standard error = σ/n (= √(p·(1−p) / n) for binomial)
-for for sample stats in which we want to judge accuracy of calc mean (unknown pop mean): t = x - pop mean
+Often used to test fairness or see how unlikely something is
+z-score:
+for large n or when population stats are known (sample std dev represents population)
+       If we flip a coin 500 times, how likely is a result 5% away from the mean?
+       var = np(1-p) = 250; var proportion = 0.001; std error = 0.032 (50 +/- 3.2%). So we need ~1.7 std devs to gewt 5%. Then use z-table
+       Or if we flip a coin 500 times and and get 300 heads, with what confidence can we say it is biased?
+       var = 250; std dev = 15.8 (250 +/- 16); 300 heads is ~4 std dev away, use z-table to get percent
+t-score:
+       same appl.ciations and math as z-score, but use when n <~30 because it has adjusted values for the percents in the table for each n
 
 ---
 
