@@ -100,17 +100,18 @@ Allows variance to increase faster than the mean: `Variance = mean + α · mean^
 ## Variance and Standard Deviation
 
 ```
-Variance of single trial = p(1-p)
+- Variance of single trial = p(1-p)
        What is the uncertainty of a single coin falling heads? = 0.25
-Variance of the mean counts of n trials once = n·p·(1-p)
+- Variance of the mean counts of n trials once = n·p·(1-p)
        If we flip 100 coins, how much on average will the number of heads vary from 50? = 25 (std dev = 5)
-Variance in the mean proportion of n trials many times (σ²)  = p·(1−p)/n
+- Variance in the mean proportion of n trials many times (σ²)  = p·(1−p)/n
        If we flip 100 coins repeatedly, by how much will the proportion of heads vary from 50%? = 0.25% (std dev = 5%)
-Literally, when we use count variance, we are summing [variance from each trial] = 100 * 0.25 in this case
-Similarly, when we use proportion variance, we are defining the percent contribution one trial to the full percent variance: (variance / n) / n
+
+- Literally, when we use count variance, we are summing [variance from each trial] = 100 * 0.25 in this case
+- Similarly, when we use proportion variance, we are defining the percent contribution one trial to the full percent variance: (variance / n) / n
        Because variance is total variance in counts, var / n is total percent variance and var/n/n is single trial percent variacnce contribution
-Std dev  (σ)   = √(variance)
-Margin of error is just std dev (or std error) for a sample being used to estimate the true population mean.
+- Std dev  (σ)   = √(variance)
+- Margin of error is just std dev (or std error) for a sample being used to estimate the true population mean.
 
 # From a sample:
 Variance = SUM((value − mean)²) / n
