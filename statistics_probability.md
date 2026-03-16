@@ -122,7 +122,7 @@ Number of standard deviations a value falls from the expected value / mean.
 
 ---
 
-## Regression, Modeling, and Inference
+## Regression, Classification, Modeling, and Inference
 
 ### Linear Regression (OLS — Ordinary Least Squares)
 Minimize the sum of squared residuals. Choose a specific distribution then minimize this residual.
@@ -144,7 +144,7 @@ Adds penalty `α · slope²` to OLS. Shrinks correlated variables but **never fu
 *"Sitting on a ridge — the penalty prevents any one variable from dominating the valley."*
 
 ### Logistic Regression
-Predicts binary outcomes (0 or 1) based on a single variable threshold. Validate by checking for stable error and realistic results.
+Type of classification algorithm. Predicts binary outcomes (0 or 1) based on a single variable threshold. Validate by checking for stable error and realistic results.
 
 ### Difference-in-Differences
 Quantify the actual effect of a change by comparing at least two samples before and after the change (e.g. beta testers vs regular users before and after the change).
@@ -177,6 +177,9 @@ Summer birthdays stay in school longer, but do not earn more
 ### Meta-leaners
 If you want to determine which subgroups respond better to a treatment
 
+
+### Decision Tree
+Type of classification algorithm. Split the data using decision rules to classify samples. See ML file for more on trees and random forests.
 ---
 
 ## Business Metrics
