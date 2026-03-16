@@ -127,13 +127,14 @@ Var(X) = E[(X − E[X])²]
 
 ### z-score and t-score
 Often used to test fairness or see how unlikely something is
-z-score:
+- z-score:
 for large n or when population stats are known (sample std dev represents population)
        If we flip a coin 500 times, how likely is a result 5% away from the mean?
        var = np(1-p) = 250; var proportion = 0.001; std error = 0.032 (50 +/- 3.2%). So we need ~1.7 std devs to gewt 5%. Then use z-table
        Or if we flip a coin 500 times and and get 300 heads, with what confidence can we say it is biased?
        var = 250; std dev = 15.8 (250 +/- 16); 300 heads is ~4 std dev away, use z-table to get percent
-t-score:
+  
+- t-score:
        same appl.ciations and math as z-score, but use when n <~30 because it has adjusted values for the percents in the table for each n
 
 ---
