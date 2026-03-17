@@ -197,6 +197,21 @@ If you want to determine which subgroups respond better to a treatment
 
 ### Decision Tree
 Type of classification algorithm. Split the data using decision rules to classify samples. See ML file for more on trees and random forests.
+
+---
+
+## Outliers
+- Use Inner quartile range(IQR) for skewed data. Values beyond 1.5 IQR of Q1 Q3 are outliers. IQR is the center 50% range of the data (Q3 - Q1)
+- Use the z-score for syummetric data. Typically use 3 std devs so outliers are the ~0.25% most extreme  (z = 3)
+
+---
+
+## Combinations
+How many ways to arrange k items in n bins?
+       -e.g. get 3 heads how of 5 flips
+= C(3 / 5) 
+= n! / k!(n-k)! = 5! / 3!2! = 10 ways
+
 ---
 
 ## Business Metrics
