@@ -218,9 +218,11 @@ How many ways to arrange k items in n bins?
 
 - sampling with replacement
 how many dice rolls to roll a 6? E = 1/P(6) = 6
+
 -sampling without replacement
 how many card draws to draw spades?
 E = (n + 1) / (k + 1) = 53/14 = 3.8, slightly faster than with replacement because cards run out!
+
 ---
 
 ## Business Metrics
