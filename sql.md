@@ -77,9 +77,9 @@ RANK()        OVER(...)
 ### Moving Averages / Running Totals
 
 ```sql
--- 3-day moving average per user
-AVG(col)  OVER(PARTITION BY user ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
-SUM(col)  OVER(PARTITION BY user ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
+AVG(col)  OVER(PARTITION BY user ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)  AS  moving_avg
+SUM(col)  OVER(PARTITION BY user ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)  AS  moving_sum
+SUM(col)  OVER(ORDER BY date)  AS  running_total
 ```
 
 ### Lag / Lead
