@@ -102,6 +102,10 @@ import heapq
 heap = []
 heapq.heappush(heap, num)
 heapq.heappop(heap)            # removes and returns smallest
+
+can even add lists to a heap and it'll always hold the smallest based on index 0:
+heapq.heappush(heap, (val, obj))
+val, smallestObj = heapq.heappop(heap)
 ```
 
 ### Two-Heap Pattern (track median)
