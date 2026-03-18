@@ -54,6 +54,8 @@ alpha_string = "".join(sorted_list)     # reassemble as string
 new = string.lower()
 new = string.replace(char, " ")         # replace all occurrences
 words = string.split()                  # split on whitespace → list of words
+
+test.find(" ") returns the index of the first instance of the specified char or string
 ```
 
 ---
