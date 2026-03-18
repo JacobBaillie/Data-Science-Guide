@@ -87,6 +87,7 @@ SUM(col)  OVER(ORDER BY date)  AS  running_total
 ```sql
 -- Select the value from 1 row prior (within partition)
 LAG(id, 1) OVER(PARTITION BY col ORDER BY col)
+LEAD(id, 1) OVER(ORDER BY col)
 ```
 
 ---
@@ -114,6 +115,7 @@ COALESCE(col_name, 0)           -- replace NULL with 0
 
 ```sql
 UNION ALL                       -- combine result sets (keeps duplicates)
+    might need to add ( ... ) around each sub query if including posrt query limits like order by, limits, etc inside each individually
 ```
 
 ---
