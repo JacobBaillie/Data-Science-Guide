@@ -227,6 +227,18 @@ how many dice rolls to roll a 6? E = 1/P(6) = 6
 how many card draws to draw spades?
 E = (n + 1) / (k + 1) = 53/14 = 3.8, slightly faster than with replacement because cards run out!
 
+## Markov chain
+
+eg what is the expected number of rolls until getting 666 for the first time?
+- consider 3 states:
+  - state 0 is ??? (need 666)
+  - E0 = 1/6(1 + E1) which is probability of enter state 1 times E1 plus 1 (takes one roll (6) to enter state 1)
+         + 5/6(1 + E0) which is similarly the probability of enter state 0 time E0 plus 1 (takes one roll (1-5) to enter state 0)
+  - state 1 is ???6 (need 66)
+  - E1 = 1/6(1 + E2) + 5/6(1 + E0)
+  - state 2 is ???66 (need 6)
+  - E1 = 1/6(1) + 5/6(1 + E0)
+    
 ---
 
 ## Business Metrics
