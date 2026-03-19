@@ -28,6 +28,10 @@ For large enough n, the **distribution of sample means** will approach normal, r
 
 ## Distributions
 
+### Uniform
+Constant probability accross a specific region
+Also known as a rectangle distribution.
+
 ### CDF and PDF
 
 | Function | Definition | Use |
