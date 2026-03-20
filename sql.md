@@ -63,7 +63,7 @@ LEFT('string', 3)                     -- extract first 3 characters
 LENGTH(string)                        -- character count
 CONCAT('string', ' ', col)            -- combine strings and column values
 'string' || 's'                       -- same as concat but easier to read
-
+STRING_AGG(col, ', ')                 -- concat many items typically as part of a group by query
 ```
 
 ---
