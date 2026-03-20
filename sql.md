@@ -123,7 +123,7 @@ UNION ALL                       -- combine result sets (keeps duplicates)
 ## Joins
 
 ```sql
-JOIN aks INNER JOIN: select a row each time a match is found (exclude null matches)
+JOIN aka INNER JOIN: select a row each time a match is found (exclude null matches)
 LEFT JOIN : select a row each time a match is found and use null for right side if no match for a row
 FULL JOIN : select a row each time a match is found and use null for EITHER side if no match for a row
 OUTER JOIN : select only the rows without a match
