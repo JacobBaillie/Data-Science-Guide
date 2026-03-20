@@ -69,9 +69,11 @@ CONCAT('string', ' ', col)            -- combine strings and column values
 ### Ranking
 
 ```sql
-ROW_NUMBER() OVER(...)
-RANK()        OVER(...)
--- etc.
+ROW_NUMBER() OVER(...) rank moves on even for ties 1,2,3,4,...
+RANK()        OVER(...) rank skips for ties 1,1,3,4,...
+DENSE_RANK() guanranteets assignemnt of all ranks 1,1,2,3,...
+
+
 ```
 
 ### Moving Averages / Running Totals
@@ -120,7 +122,7 @@ UNION ALL                       -- combine result sets (keeps duplicates)
 
 ---
 
-## CTEs and Scalar Variables
+## CTEs (common table expression) and Scalar Variables
 
 Use a CTE to define a scalar variable and cross join it into the main query:
 
@@ -136,6 +138,61 @@ CROSS JOIN order_counts   -- injects total_orders into every row for use in expr
 ```
 
 ---
+
+## Groups and partitions and subqueries
+How to select events when they are the only event all day
+Use subquery
+```sql
+SELECT e.event
+FROM events AS e
+LEFT JOIN (
+    SELECT date, COUNT(*) as cnt
+    FROM events
+    GROUP BY 1
+    ) AS d
+ON e.date = d.date
+WHERE d.cnt = 1
+```
+
+Or do the first pass first to avoid writing the subquery inside the other
+```sql
+WITH d AS (
+        SELECT date, COUNT(*) AS cnt
+        FROM events
+        GROUP BY 1
+        )
+SELECT e.event
+FROM events AS e
+LEFT JOIN d
+ON e.date = d.date
+WHERE d.cnt = 1
+```
+
+Or as a partition, but keep it inside as a subquery to reduce line count and no join
+```sql
+SELECT event
+FROM(
+    SELECT event,
+           COUNT(*) OVER(PARTITION BY date) AS cnt
+    FROM events
+    ) AS sub
+WHERE cnt = 1
+```
+
+
+Or use partition (better when we need every row but want to **filter** by the frequency or some group-based feature)
+```sql
+WITH d AS (SELECT date,
+                COUNT(*) OVER(PARTITION BY date) AS cnt
+           FROM events
+           )
+SELECT e.event
+FROM events AS e
+LEFT JOIN d
+ON e.date = d.date
+WHERE d.cnt = 1
+```
+
 
 ## Misc
 
