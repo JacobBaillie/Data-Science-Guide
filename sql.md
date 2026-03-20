@@ -73,9 +73,11 @@ CONCAT('string', ' ', col)            -- combine strings and column values
 ### Ranking
 
 ```sql
-ROW_NUMBER() OVER(...) rank moves on even for ties 1,2,3,4,...
-RANK()        OVER(...) rank skips for ties 1,1,3,4,...
-DENSE_RANK() guanranteets assignemnt of all ranks 1,1,2,3,...
+ROW_NUMBER() OVER(...)         -- rank moves on even for ties 1,2,3,4,...
+RANK()        OVER(...)        -- rank skips for ties 1,1,3,4,...
+DENSE_RANK()                   -- guanranteets assignemnt of all ranks 1,1,2,3,...
+
+OFFSET 1                       -- skip the first 1 rows
 ```
 
 ### Moving Averages / Running Totals
@@ -111,6 +113,15 @@ COUNT(DISTINCT col)
 
 ```sql
 COALESCE(col_name, 0)           -- replace NULL with 0
+
+SELECT 1 AS num
+WHERE num != 1                  -- gives an empty table
+
+SELECT (
+SELECT 1 AS num
+WHERE num != 1
+)                               -- gives null (if the source table is already empty:prints null. If we filter a non emtpy table to become empty, prints empty table)
+
 ```
 
 ---
