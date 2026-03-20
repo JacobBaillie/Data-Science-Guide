@@ -72,8 +72,6 @@ CONCAT('string', ' ', col)            -- combine strings and column values
 ROW_NUMBER() OVER(...) rank moves on even for ties 1,2,3,4,...
 RANK()        OVER(...) rank skips for ties 1,1,3,4,...
 DENSE_RANK() guanranteets assignemnt of all ranks 1,1,2,3,...
-
-
 ```
 
 ### Moving Averages / Running Totals
@@ -124,12 +122,14 @@ UNION ALL                       -- combine result sets (keeps duplicates)
 
 ## Joins
 
+```sql
 JOIN aks INNER JOIN: select a row each time a match is found (exclude null matches)
 LEFT JOIN : select a row each time a match is found and use null for right side if no match for a row
 FULL JOIN : select a row each time a match is found and use null for EITHER side if no match for a row
 OUTER JOIN : select only the rows without a match
 NATURAL JOIN : automatically selects the matching column names then does regular JOIN or specified eg NATURAL LEFT JOIN
 CROSS JOIN : force pair all rows with all rows of the other side (no ON line)
+```
 
 Can combine the above to be more specific eg NATURAL LEFT OUTER JOIN
 
