@@ -218,5 +218,6 @@ WHERE d.cnt = 1
 -- Filter for odd numbers
 WHERE MOD(num, 2) = 1
 
-### DELETE FROM table WHERE ...
+-- remove seleted row
+DELETE FROM table WHERE ...  
 ```
