@@ -57,9 +57,13 @@ TIMESTAMP (or date) BETWEEN '' AND ''
 ## Strings
 
 ```sql
+SUBSTRING('string, 2, 2)              -- gives 'tr' start from letter 2, and show 2 letters
+SUBSTRING('string, 3)                 -- gives 'ring' start from letter 3 and go till the end
 LEFT('string', 3)                     -- extract first 3 characters
 LENGTH(string)                        -- character count
 CONCAT('string', ' ', col)            -- combine strings and column values
+'string' || 's'                       -- same as concat but easier to read
+
 ```
 
 ---
@@ -206,10 +210,13 @@ ON e.date = d.date
 WHERE d.cnt = 1
 ```
 
+---
 
 ## Misc
 
 ```sql
 -- Filter for odd numbers
 WHERE MOD(num, 2) = 1
+
+### DELETE FROM table WHERE ...
 ```
