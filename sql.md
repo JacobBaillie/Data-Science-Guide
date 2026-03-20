@@ -122,6 +122,19 @@ UNION ALL                       -- combine result sets (keeps duplicates)
 
 ---
 
+## Joins
+
+JOIN aks INNER JOIN: select a row each time a match is found (exclude null matches)
+LEFT JOIN : select a row each time a match is found and use null for right side if no match for a row
+FULL JOIN : select a row each time a match is found and use null for EITHER side if no match for a row
+OUTER JOIN : select only the rows without a match
+NATURAL JOIN : automatically selects the matching column names then does regular JOIN or specified eg NATURAL LEFT JOIN
+CROSS JOIN : force pair all rows with all rows of the other side (no ON line)
+
+Can combine the above to be more specific eg NATURAL LEFT OUTER JOIN
+
+---
+
 ## CTEs (common table expression) and Scalar Variables
 
 Use a CTE to define a scalar variable and cross join it into the main query:
