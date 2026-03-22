@@ -64,6 +64,16 @@ LENGTH(string)                        -- character count
 CONCAT('string', ' ', col)            -- combine strings and column values
 'string' || 's'                       -- same as concat but easier to read
 STRING_AGG(col, ', ')                 -- concat many items typically as part of a group by query
+WHERE email ~ '^[A-Za-z][A-Za-z0-9._-]*@leetcode\.com$'       -- checks that the email is valid. Brackets indicate to choose one of the chars inside. * indicates to repeat as needed.
+alternatively:
+WHERE email LIKE '%@leetcode.com'
+AND LEFT(email, 1) ~ '[A-Za-z]'
+AND LEFT(mail, LENGTH(mail) - 13) !~ '[^a-zA-Z0-9.-_]'    -- make sure to put - at the end or else it reads as a range!!!
+
+    col ~ '[ABC]'                 -- Are any of the chars good?
+    col !~ '[ABC]'                -- Are none of the chars good?
+    col ~ '[^ABC]'                -- Is at least one char bad?
+    col !~ '[^ABC]'               -- Are all of the chars good?
 ```
 
 ---
