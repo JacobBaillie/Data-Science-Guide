@@ -22,10 +22,13 @@ lst.append('item')              # add to end
 lst.insert(1, 'item')           # insert at index (existing items shift right)
 lst.pop(1)                      # remove at index AND return it
 lst.remove('item')              # remove first occurrence (no return)
+lst.reverse()                   # reverse the order
+reversed(lst)                   # returns the reversed list
 del lst[3:5]                    # delete slice in place
 lst.clear()                     # empty the list (object still exists)
 lst.extend([1, 2, 3])           # multi-append (each item individually)
 lst.sort()                      # sort in place
+sorted(lst)                     # returns the sorted list
 lst.index('item')               # index of first appearance
 
 lst.isalnum()                   # alphanumeric check (also works on chars)
