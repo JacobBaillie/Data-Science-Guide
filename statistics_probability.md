@@ -122,26 +122,30 @@ Allows variance to increase faster than the mean: `Variance = mean + α · mean^
 - E.g. std dev of mean of heights of n people is σ / √(n)
 
 ```
-### Summary:
-#### heights of n people
-mean = μ = 160 (of population or sample if n is big)
-sample size = n = 100 people
-std dev = σ = 20 (of population or sample if n is big)
-std error SE = σ / √(n) = 2 (100 people will have an average of 160 +/- 2)
-mean sum of heights for n trials = μ = np = 16000
-std error sum = √(n) σ = 200 (total height is 16000 +/- 200)
-margin of error then uses std error to determine confidence in our sample
+### heights of n people
+#### population stats
+- mean = μ = 160 (of population or sample if n is big)
+- std dev = σ = 20 (of population or sample if n is big)
+#### sample stats
+- sample size = n = 100 people
+- std error SE = σ / √(n) = 2 (100 people will have an average of 160 +/- 2)
+- mean sum of heights for n trials = μ = np = 16000
+- std error sum = √(n) σ = 200 (total height is 16000 +/- 200)
+- margin of error then uses whatever stats a relevant with the associated z-table to determine confidence in our sample
 
 
-#### coin flips
-mean for 1 trial = μ = p = 0.5
-sample size = n = 100 flips
-std dev = σ = √(p(1-p)) = 0.5
-std error SE = σ / √(n) = 0.05 (100 flips will give 50 +/- 5 % heads)
-mean heads for n flips = μ = np = 50 heads
-std error of heads SE = √(n) σ = 5 (total head will be 50 +/- 5)
-mean proportion head in n flips = μ = p = 0.5
-std error in proportion head = σ / √(n) = 0.05 (100 flips will give 50 +/- 5 % heads)
+### coin flips
+#### population stats
+- mean for 1 trial = μ = p = 0.5
+- std dev = σ = √(p(1-p)) = 0.5
+#### sample stats
+- sample size = n = 100 flips
+- std error SE = σ / √(n) = 0.05 (100 flips will give 50 +/- 5 % heads)
+- mean heads for n flips = μ = np = 50 heads
+- std error of heads SE = √(n) σ = 5 (total head will be 50 +/- 5)
+- mean proportion head in n flips  = mean for 1 trial = 0.5
+- std error in proportion head = σ / √(n) = 0.05 (100 flips will give 50 +/- 5 % heads)
+- margin of error then uses whatever stats a relevant with the associated z-table to determine confidence in our sample
 
 
 ### Explicit Definition
