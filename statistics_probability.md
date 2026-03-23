@@ -110,21 +110,44 @@ Allows variance to increase faster than the mean: `Variance = mean + α · mean^
        If we flip 100 coins, how much on average will the number of heads vary from 50? = 25 (std dev = 5)
 - Variance in the mean proportion of n trials many times (σ²)  = p·(1−p)/n
        If we flip 100 coins repeatedly, by how much will the proportion of heads vary from 50%? = 0.25% (std dev = 5%)
+- Variance of the mean height of n people does not automatically follow a mathematical distribution like binomial, so we cannot define it direclty. We must already have σ or else directly calcuate it from a laerge enough sample size. Then,std dev = σ and naturally variance = σ².
 
 - Literally, when we use count variance, we are summing [variance from each trial] = 100 * 0.25 in this case
 - Similarly, when we use proportion variance, we are defining the percent contribution one trial to the full percent variance: (variance / n) / n
        Because variance is total variance in counts, var / n is total percent variance and var/n/n is single trial percent variacnce contribution
 - Std dev  (σ)   = √(variance)
-- Margin of error is just std dev (or std error) for a sample being used to estimate the true population mean.
+- For sample stats, margin of error is just std error for a sample being used to estimate the true population mean.
+- Variance in the mean proportiona of n people does not makes sense, so we calcualte margin of error differently for binomial and continuous null hypotheses.
+- E.g. std dev of sum of heights of n people is √(n) σ
+- E.g. std dev of mean of heights of n people is σ / √(n)
 
-# From a sample:
-Variance = SUM((value − mean)²) / n
-Std dev  = √(SUM((value − mean)²) / n)
 ```
+### Summary:
+#### heights of n people
+mean = μ = 160 (of population or sample if n is big)
+sample size = n = 100 people
+std dev = σ = 20 (of population or sample if n is big)
+std error SE = σ / √(n) = 2 (100 people will have an average of 160 +/- 2)
+mean sum of heights for n trials = μ = np = 16000
+std error sum = √(n) σ = 200 (total height is 16000 +/- 200)
+margin of error then uses std error to determine confidence in our sample
+
+
+#### coin flips
+mean for 1 trial = μ = p = 0.5
+sample size = n = 100 flips
+std dev = σ = √(p(1-p)) = 0.5
+std error SE = σ / √(n) = 0.05 (100 flips will give 50 +/- 5 % heads)
+mean heads for n flips = μ = np = 50 heads
+std error of heads SE = √(n) σ = 5 (total head will be 50 +/- 5)
+mean proportion head in n flips = μ = p = 0.5
+std error in proportion head = σ / √(n) = 0.05 (100 flips will give 50 +/- 5 % heads)
+
 
 ### Explicit Definition
 
-```
+Variance = SUM((value − mean)²) / n
+Std dev  = √(SUM((value − mean)²) / n)
 Var(X) = E[(X − E[X])²]
        = E[X²] − (E[X])²
 ```
