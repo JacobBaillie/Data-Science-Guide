@@ -50,6 +50,11 @@ Normal distribution full defined by the mean and variance
 | **Variance** | σ² |
 | **PDF** | `f(x) = 1/(σ·√(2π)) · exp[−½·((x−μ)/σ)²]` |
 
+#### Combining multiple distributions
+Mean of two PDFs is simply μ(1) + μ(2)
+Variance of two PDFs is simply σ²(1) + σ²(2)
+
+
 ### Binomial
 Models the number of successes in n independent trials, each with success probability p.
 
@@ -265,7 +270,73 @@ eg what is the expected number of rolls until getting 666 for the first time?
   ###### E1 = 1/6(1 + E2) + 5/6(1 + E0)
   ##### state 2 is ???66 (need 6)
   ###### E1 = 1/6(1) + 5/6(1 + E0)
-    
+
+
+### Expectation of PDFs
+E(x) = integral (x p(x) dx)
+For normal, this is by definition = mean
+
+### Covariance of two distributions x1 and x2
+
+#### Cov(X) = | σ²(1)   c * σ²(1) * σ²(2) |
+####          | c * σ²(1) * σ²(2)   σ²(2) |
+- e.g. what is the expectation valueand variance of your stock outcome if you put 30% into stock x and 70% into stock 7?
+- E(x) = u(1)
+- E(y) = u(2)
+- choice: z = Ax + By = 0.3x + 0.7y
+- E(z) = 0.3x + 0.7y
+- σ²(z) = A²σ²(x) + B²σ²(y)
+- Covariance uses the matrix above to account for **nonindependent variables**
+- Cov(Ax + By) = A Qx Aᵀ + B Qy Bᵀ = A²σ²(x) + B²σ²(y) = σ²(z)
+- In the example, x = x1 (stock 1) and thus Qx = σ²(x)= A²σ²(x)
+- If variables are independent, we can simple talk about variance instead for simplicity
+
+### Probability for multiple PDFs
+#### Conditional distributions
+- Probabilty that a student passed *after studying*. 75% of students studied, but only 50% passed and studied
+- p(passed | studied) = p(studied, passed) / p(studied) = 0.5/0.75 = 67%
+- If it is cold 30% of the days (70% hot) and it rains on 80% of cold days and only 20% of hot days, how often does it rain?
+- p(rain) = p(cold and rain) + p(hot and rain) = p(cold)p(rain | cold) + p(hot)p(rain | hot) = 38%
+
+#### Moments and expectation
+##### Recall for a single PDF:
+- E(x) = integral(x p(x) dx)
+##### What is the expectation value of x2 given x1 + x2 = n?
+- E(x2 | x1 + x2 = n)
+##### Minimize the difference between x2 and a function of choice to represent our condition
+- min E( (x2 - f(S))² ) = min E( (x2 - aS - b)² )  --- use a simple line equation to solve for a and b
+- let a and b be constants based on parameters of X1 and X2 based on the condition
+##### Get b by taking derivative WRT b
+- E( (x2 - aS - b)² ) = 0 (minimum is 0)
+- 2E(x2 - aS - b) = 0
+- E(b) = b = E(x2) - E(aS) = u(2) - aE(S)
+- if S = x1 + x2 = n, b = u(2) - an
+##### Get a by taking derivative WRT a
+- E( (x2 - aS - b)² ) = 0 (minimum is 0)
+- 2E(S(x2 - aS - b)) = 0
+- E(Sx2) = aE(S²) + bE(S)
+- E(Sx2) = aE(S²) + (u(2) - an) * E(S) ; substitute b = u(2) - aE(S)
+- E(Sx2) = aE(S²) + u(2)E(S) - aE(S)²
+- E(Sx2) - u(2)E(S) = a(E(S²) - E(S)²)
+- Cov(x2, S) = a Var(S)
+- a = Cov(x2, S) / Var(S)
+##### Solve E to find x2
+- min E( (x2 - aS - b)² )
+- E( (x2 - aS - b)² ) = 0
+- x2 = aS + b
+- x2 = aS + m2 - aE(S)  ; substitute b
+- x2 = Cov(x2, S) / Var(S) + m2 - Cov(x2, S) / Var(S) * E(S)   ; substitute a
+- x2 = m2 + (Cov(x2, S) / Var(S)) (S - E(S))
+#### General equation: what x is expected given condition S: x = m + (Cov(x, S) / Var(S)) (S - E(S))
+- x is some parameter with a pdf
+- m is the mean
+- S is some condition involving x with another pdf 
+##### example
+- S = x1 + x2 = n: Cov(x2, x1 + x2) = Cov(x2,x1) + Cov(x2,x2) = 0 + σ²(2); Var(S) = σ²(2) + σ²(1)
+
+
+
+       
 ---
 
 ## Business Metrics
