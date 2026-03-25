@@ -154,7 +154,7 @@ Variance = SUM((value − mean)²) / n
 Std dev  = √(SUM((value − mean)²) / n)
 Var(X) = E[(X − E[X])²]
        = E[X²] − (E[X])²
-```
+
 
 ### z-score and t-score
 Often used to test fairness or see how unlikely something is
