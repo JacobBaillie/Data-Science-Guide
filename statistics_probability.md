@@ -61,7 +61,7 @@ Models the number of successes in n independent trials, each with success probab
 |Parameter|Definition|
 |---|---|
 | **Mean** | `μ = n·p` |
-| **Variance by params** | `σ² = n·p·(1−p)` |
+| **Variance by sample size** | `σ² = n·p·(1−p)` |
 | **Variance by mean** | `σ² = μ·(1−p)` — always **less than** μ |
 | **PMF** | `P(X=k) = C(n,k) · pᵏ · (1−p)^(n−k)` | 
 - PMF is probability of getting k successes in n trials for success probability p for each trial
@@ -75,7 +75,7 @@ Models **count frequency** for pure independent event statistics.
 |Parameter|Definition|
 |---|---|
 | **Mean** | `μ = λ` — expected freq |
-| **Variance by params** | `σ² = λ` |
+| **Variance by parameter** | `σ² = λ` |
 | **Variance by mean** | `σ² = μ` — variance equals mean exactly |
 | **PMF** | `P(X=k) = λᵏ · e^(−λ) / k!` |
 - PMF is probability of getting k counts based on the expected counts (λ) which scales exponentially with desired number. e term normalizes, k! term removes favor for combinatorials
@@ -87,7 +87,7 @@ Models **count frequency** for pure independent event statistics.
 Adds a dispersion factor to adjust for slight overdispersion when the data is  **close to Poisson** but not quite due to other variables.
 |Parameter|Definition|
 |---|---|
-| **Variance by params** | `σ² = φ·λ` |
+| **Variance by parameter** | `σ² = φ·λ` |
 | **Variance by mean** | `σ² = φ·μ` — variance is greater than the mean |
 
 ### Negative Binomial
@@ -96,7 +96,7 @@ Allows variance to increase faster than the mean: `Variance = mean + α · mean^
 |Parameter|Definition|
 |---|---|
 | **Mean** | `μ = r·(1−p)/p` — required successes r for probability p of each event. If working with actual data, just calculate μ directly instead. |
-| **Variance by params** | `σ² = r·(1−p)/p²` |
+| **Variance by parameter** | `σ² = r·(1−p)/p²` |
 | **Variance by mean** | `σ² = μ + α·μ²` where `α = 1/r` |
 | **PMF** | `P(X=k) = C(k+r−1, k) · pʳ · (1−p)ᵏ` |
 - PMF is the probability of getting r successes before failing r times. Very similar to the binomial form, except now r is defined separately and **r is constrained instead of n**
