@@ -247,5 +247,9 @@ DELETE FROM events as e1
 USING events as e2
 WHERE e1.event = e2.event
 AND e1.date < e2.date
--- This removes events of the same name, keeping only the most recent one  
+-- This removes events of the same name, keeping only the most recent one
+
+UPDATE table
+SET col = ....
+-- can directly change the table without a select statement
 ```
