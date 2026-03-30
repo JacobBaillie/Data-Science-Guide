@@ -68,10 +68,16 @@ test.find(" ") returns the index of the first instance of the specified char or 
 ```python
 empty_set = set()
 my_set = set([1, 2, 3])
+len(my_set)
 
 my_set.add(1)
 my_set.add(tuple([a, 2, 3]))   # sets can only hold hashable types; use tuples for sequences
 my_set.discard(1)              # remove if present (no error if missing)
+for num in my_set:
+    print num
+
+combinedSet = set1 - set2       # remove one from another
+combinedSet = set1 | set2       # combine sets
 ```
 
 ---
@@ -82,6 +88,8 @@ my_set.discard(1)              # remove if present (no error if missing)
 d.get(key)                     # safe get (returns None if missing)
 d.keys()                       # returns view of keys
 d.items()                      # returns view of (key, value) pairs
+del d[key]                     # remove entry
+d.pop(key)                     # remove entry and return it
 
 # Sort items by key (descending)
 sorted(d.items(), key=lambda item: item[0], reverse=True)
