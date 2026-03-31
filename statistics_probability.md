@@ -134,6 +134,12 @@ Variance of mean height of n people — no closed form; must use σ from populat
 | Mean heads = np | 50 |
 | Std error of heads = √n·σ | 5 → head count is 50 ± 5 |
 
+**A/B Test**
+Given mean + sigma for a control and test population with n for each, is the result signififcant:
+- Use a difference test
+- is μ1 - μ2 bigger than the a = 0.05 level based on the combined variance of the two populations
+- combined variance SE = σ(X1 - X2) = √( σ1²/n1 + σ2²/n2)
+
 **Explicit definitions**
 ```
 Variance = SUM((value − mean)²) / n
