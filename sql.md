@@ -69,11 +69,14 @@ alternatively:
 WHERE email LIKE '%@leetcode.com'
 AND LEFT(email, 1) ~ '[A-Za-z]'
 AND LEFT(mail, LENGTH(mail) - 13) !~ '[^a-zA-Z0-9.-_]'    -- make sure to put - at the end or else it reads as a range!!!
+WHERE email ~ '^[a-zA-Z0-9_]*@[a-zA-Z]*\.com$'
 
     col ~ '[ABC]'                 -- Are any of the chars good?
     col !~ '[ABC]'                -- Are none of the chars good?
     col ~ '[^ABC]'                -- Is at least one char bad?
     col !~ '[^ABC]'               -- Are all of the chars good?
+
+INITCAP('this is a-string! ok?')     -- produces 'This Is A-String! Ok?'
 ```
 
 ---
