@@ -70,6 +70,7 @@ WHERE email LIKE '%@leetcode.com'
 AND LEFT(email, 1) ~ '[A-Za-z]'
 AND LEFT(mail, LENGTH(mail) - 13) !~ '[^a-zA-Z0-9.-_]'    -- make sure to put - at the end or else it reads as a range!!!
 WHERE email ~ '^[a-zA-Z0-9_]*@[a-zA-Z]*\.com$'
+WHERE description ~ '\ySN[0-9][0-9][0-9][0-9]\-[0-9][0-9][0-9][0-9]\y'  -- check that a string contains a sequence of SN####-####. /y allows for boundary or any special character
 
     col ~ '[ABC]'                 -- Are any of the chars good?
     col !~ '[ABC]'                -- Are none of the chars good?
