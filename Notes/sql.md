@@ -1,16 +1,35 @@
 # SQL
 
 ---
+## Things I missed
+
+```sql
+EXTRACT(??? FROM date_column)          -- generic extraction
+TO_CHAR(date, 'Month')                 -- → 'January'
+CONCAT('string', ' ', 'string')
+STRING_AGG(col, ', ')                  -- for a group query
+TO_DATE(input_year::text || '-' || input_days_of_year::text, 'IYYY-ID')
+WHERE email ~ '^[a-zA-Z0-9_]*@[a-zA-Z]*\.com$'
+INITCAP('this is a-string! ok?')       -- produces 'This Is A-String! Ok?'
+AVG(col)  OVER(ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
+LEAD(id, 1) OVER(ORDER BY col)
+WHERE MOD(num, 2) = 1
+DELETE FROM table WHERE ...
+UPDATE table
+SET col = ....
+```
 
 ## Dates
 
 ### Date Types
 
-| Type | Notes |
-|------|-------|
-| `DATE` | Calendar date only |
-| `TIMESTAMP` | Date + time |
-| `STRING` | Non-date; must be cast before date operations |
+
+| Type        | Notes                                         |
+| ----------- | --------------------------------------------- |
+| `DATE`      | Calendar date only                            |
+| `TIMESTAMP` | Date + time                                   |
+| `STRING`    | Non-date; must be cast before date operations |
+
 
 ### Casting
 
@@ -177,13 +196,29 @@ WITH order_counts AS (
 SELECT ...
 FROM ...
 CROSS JOIN order_counts   -- injects total_orders into every row for use in expressions
+
+WITH RECURSIVE cte_name AS (
+    -- 1. Anchor Member (Initial non-recursive query)
+    SELECT columns FROM table WHERE condition
+    
+    UNION ALL
+    
+    -- 2. Recursive Member (Refers back to cte_name)
+    SELECT columns FROM table 
+    JOIN cte_name ON table.parent_id = cte_name.id
+)
+-- 3. Final Query
+SELECT * FROM cte_name;
+
 ```
 
 ---
 
 ## Groups and partitions and subqueries
+
 How to select events when they are the only event all day
 Use subquery
+
 ```sql
 SELECT e.event
 FROM events AS e
@@ -197,6 +232,7 @@ WHERE d.cnt = 1
 ```
 
 Or do the first pass first to avoid writing the subquery inside the other
+
 ```sql
 WITH d AS (
         SELECT date, COUNT(*) AS cnt
@@ -211,6 +247,7 @@ WHERE d.cnt = 1
 ```
 
 Or as a partition, but keep it inside as a subquery to reduce line count and no join
+
 ```sql
 SELECT event
 FROM(
@@ -221,8 +258,8 @@ FROM(
 WHERE cnt = 1
 ```
 
-
 Or use partition (better when we need every row but want to **filter** by the frequency or some group-based feature)
+
 ```sql
 WITH d AS (SELECT date,
                 COUNT(*) OVER(PARTITION BY date) AS cnt
@@ -257,3 +294,4 @@ UPDATE table
 SET col = ....
 -- can directly change the table without a select statement
 ```
+

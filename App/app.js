@@ -266,12 +266,34 @@ function renderNotes() {
   }).join('');
 
   var md = NOTES[state.notesCat].content;
+  var headers = extractHeaders(md);
   var html = renderMarkdown(md);
+
+  var sidebarItems = headers.map(function(h) {
+    return '<a class="sidebar-link sidebar-h' + h.level + '" href="#' + h.id + '">' + h.text + '</a>';
+  }).join('');
 
   return '<div class="notes-container">' +
     '<select class="notes-select" id="sel-notes-cat">' + catOptions + '</select>' +
-    '<div class="notes-content">' + html + '</div>' +
+    '<div class="notes-layout">' +
+      '<nav class="notes-sidebar" id="notes-sidebar">' + sidebarItems + '</nav>' +
+      '<div class="notes-content">' + html + '</div>' +
+    '</div>' +
     '</div>';
+}
+
+function extractHeaders(md) {
+  var headers = [];
+  var lines = md.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var m = lines[i].match(/^(#{1,3})\s+(.+)/);
+    if (m) {
+      var text = m[2].replace(/\*\*/g, '').replace(/\*/g, '').replace(/`([^`]+)`/g, '$1');
+      var id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      headers.push({ level: m[1].length, text: text, id: id });
+    }
+  }
+  return headers;
 }
 
 /* ── Markdown renderer (simple) ── */
@@ -358,7 +380,9 @@ function renderMarkdown(md) {
     var hMatch = line.match(/^(#{1,3})\s+(.+)/);
     if (hMatch) {
       var level = hMatch[1].length;
-      html += '<h' + level + '>' + inlineFormat(hMatch[2]) + '</h' + level + '>';
+      var rawText = hMatch[2].replace(/\*\*/g, '').replace(/\*/g, '').replace(/`([^`]+)`/g, '$1');
+      var hId = rawText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      html += '<h' + level + ' id="' + hId + '">' + inlineFormat(hMatch[2]) + '</h' + level + '>';
       continue;
     }
 
@@ -410,6 +434,9 @@ function escHtml(t) {
 
 /* ── Event binding ── */
 function bindEvents() {
+  // Clean up previous scroll listener
+  if (state._scrollCleanup) { state._scrollCleanup(); state._scrollCleanup = null; }
+
   // Nav tabs
   document.querySelectorAll('.nav-tab').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -586,6 +613,42 @@ function bindEvents() {
       state.notesCat = this.value;
       render();
     });
+  }
+
+  // Sidebar smooth scroll + active highlight
+  var sidebar = document.getElementById('notes-sidebar');
+  if (sidebar) {
+    sidebar.querySelectorAll('.sidebar-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.getElementById(this.getAttribute('href').slice(1));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Scroll spy: highlight active section
+    var sidebarLinks = sidebar.querySelectorAll('.sidebar-link');
+    var headingEls = [];
+    sidebarLinks.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) headingEls.push({ el: el, link: link });
+    });
+
+    if (headingEls.length) {
+      function updateActiveLink() {
+        var scrollY = window.scrollY + 80;
+        var active = headingEls[0];
+        for (var i = 0; i < headingEls.length; i++) {
+          if (headingEls[i].el.offsetTop <= scrollY) active = headingEls[i];
+        }
+        sidebarLinks.forEach(function(l) { l.classList.remove('active'); });
+        if (active) active.link.classList.add('active');
+      }
+      window.addEventListener('scroll', updateActiveLink);
+      updateActiveLink();
+      state._scrollCleanup = function() { window.removeEventListener('scroll', updateActiveLink); };
+    }
   }
 }
 

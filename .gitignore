@@ -1,0 +1,9 @@
+Testing.py
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
+*.log
+.env
+node_modules/
+.vscode/

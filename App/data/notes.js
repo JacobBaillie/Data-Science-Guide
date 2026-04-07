@@ -634,6 +634,23 @@ bfs(queue, visited)
     content: `# SQL
 
 ---
+## Things I missed
+
+\`\`\`sql
+EXTRACT(??? FROM date_column)          -- generic extraction
+TO_CHAR(date, 'Month')                 -- → 'January'
+CONCAT('string', ' ', 'string')
+STRING_AGG(col, ', ')                  -- for a group query
+TO_DATE(input_year::text || '-' || input_days_of_year::text, 'IYYY-ID')
+WHERE email ~ '^[a-zA-Z0-9_]*@[a-zA-Z]*\\.com$'
+INITCAP('this is a-string! ok?')       -- produces 'This Is A-String! Ok?'
+AVG(col)  OVER(ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
+LEAD(id, 1) OVER(ORDER BY col)
+WHERE MOD(num, 2) = 1
+DELETE FROM table WHERE ...
+UPDATE table
+SET col = ....
+\`\`\`
 
 ## Dates
 
@@ -799,6 +816,19 @@ WITH order_counts AS (
 SELECT ...
 FROM ...
 CROSS JOIN order_counts   -- injects total_orders into every row
+
+WITH RECURSIVE cte_name AS (
+    -- 1. Anchor Member (Initial non-recursive query)
+    SELECT columns FROM table WHERE condition
+
+    UNION ALL
+
+    -- 2. Recursive Member (Refers back to cte_name)
+    SELECT columns FROM table
+    JOIN cte_name ON table.parent_id = cte_name.id
+)
+-- 3. Final Query
+SELECT * FROM cte_name;
 \`\`\`
 
 ---
