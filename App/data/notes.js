@@ -638,6 +638,9 @@ bfs(queue, visited)
 
 \`\`\`sql
 EXTRACT(??? FROM date_column)          -- generic extraction
+EXTRACT(EPOCH FROM event_timestamp1 - event_timestamp2) -- gets total delta in seconds for timestamps
+event_date1 - event_date2 -- gets total delta in days for dates
+timestamp::time -- gets the time from a timestamp
 TO_CHAR(date, 'Month')                 -- → 'January'
 CONCAT('string', ' ', 'string')
 STRING_AGG(col, ', ')                  -- for a group query
