@@ -891,6 +891,49 @@ SET col = ....                  -- directly change table
 \`\`\``
   },
 
+  behavioral: {
+    title: "Behavioral",
+    content: `# Behavioral Interview Prep
+
+---
+
+## STAR Method
+
+All behavioral answers follow the **STAR** format:
+- **S** — Situation: Set the context
+- **T** — Task: What you needed to accomplish
+- **A** — Action: What you specifically did
+- **R** — Result: The outcome and impact
+
+---
+
+## Themes & Stories
+
+### Setbacks / Failure — ZnO Synthesis
+Multiple synthetic options made it expensive to find a working prep. Advocated for a two-pronged strategy: statistical study of single particles for quantitative summary, and ML modeling of ~300 literature reports. ML validation repeatedly failed (small sample, sparse data). Stats study provided enough early data to support grant cycle — renewed for 5 years at $20M.
+
+### Time Management — Multiple Projects + Thesis
+Led fundamental research, applied research, thesis writing (5 months to defense), mentoring, and a new project simultaneously. Created a live timeline with prioritized subgoals. Handed off the new project to a trusted coworker with mentoring. Prepared documentation for collaborative projects. Finished thesis 3 weeks early, graduated on time, paper published in Spring.
+
+### Data-Driven Decisions — Data Pipeline EDA
+Lab relied on brute-force data workup, leading to slow decisions. Built a consolidated Python-based pipeline: instrument communication (GPIB, USB), Postgres storage, and automatic EDA (SNR, baseline drift, anomaly detection, outliers). Users reported ~50% faster routine experiments.
+
+### Growth / Comfort Zone — Lab Reservations App
+Key instruments booked months in advance. Despite no web development experience, built a custom reservation system using Cursor and Claude Code. Included monitoring, mobile support, email services, user tracking, and booking rule controls. Lab adopted it immediately; backlog dropped from 3 months to ~2 weeks.
+
+### Conflict Resolution — Instrument Layout
+Needed to reorganize 15 instruments across two tables. Users favored layouts benefiting their own work. Quantified time-allocation of each measurement type for both layouts using historic frequency and typical runtime. Layout A scored ~25% more efficient. Earned trust through data; the other user contributed sensitivity tips that benefited everyone.
+
+### Different Workstyles — Planner vs. Flexible
+Collaborated with a labmate who preferred last-minute decisions, causing lost instrument time. Had a direct conversation about accommodating each other's styles. They appreciated the directness and improved their relationships with other labmates too.
+
+### System Redesign — Data Pipeline
+Transformed fragmented multi-instrument data workup into a unified Python/Postgres pipeline with automatic EDA. Collaborated with users and a software tech on the framework. Result: 50% faster experiments, standardized data quality baseline.
+
+### Leadership / Motivation — Booking Policy
+Lab pushed back on booking policy changes. Analyzed historical bookings via ETL (Google API + file storage). Regression showed ~2% more usage per word in booking detail, nearly double when mentioning a key light source. After seeing data, everyone adopted the policy. 12-month causal inference (DiD) confirmed ~50% utilization increase directly caused by increased booking detail.`
+  },
+
   web_development: {
     title: "Web Development",
     content: `# Web Development

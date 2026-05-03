@@ -2,6 +2,8 @@
 const CATEGORIES = {
   statistics_probability: { title: "Statistics & Probability", data: STATS_PROB_DATA },
   machine_learning:       { title: "Machine Learning",        data: ML_DATA },
+  my_projects:            { title: "My Projects",             data: MY_PROJECTS_DATA },
+  behavioral:             { title: "Behavioral",              data: BEHAVIORAL_DATA },
   python:                 { title: "Python",                   data: PYTHON_DATA },
   sql:                    { title: "SQL",                      data: SQL_DATA },
   web_development:        { title: "Web Development",          data: WEB_DEV_DATA }
@@ -16,11 +18,37 @@ const MODES = {
 };
 
 const TAG_COLORS = {
-  ab_testing:    {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'},
-  distributions: {bg:'#EEEDFE',bc:'#AFA9EC',tc:'#3C3489'},
-  probability:   {bg:'#FAEEDA',bc:'#EF9F27',tc:'#633806'},
-  regression:    {bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
-  variance:      {bg:'#FAECE7',bc:'#F0997B',tc:'#712B13'}
+  ab_testing:       {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'},
+  distributions:    {bg:'#EEEDFE',bc:'#AFA9EC',tc:'#3C3489'},
+  probability:      {bg:'#FAEEDA',bc:'#EF9F27',tc:'#633806'},
+  regression:       {bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
+  variance:         {bg:'#FAECE7',bc:'#F0997B',tc:'#712B13'},
+  causal_inference: {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'},
+  glm:              {bg:'#EEEDFE',bc:'#AFA9EC',tc:'#3C3489'},
+  ml_small_data:    {bg:'#FAEEDA',bc:'#EF9F27',tc:'#633806'},
+  model_failure:    {bg:'#FCEBEB',bc:'#F09595',tc:'#791F1F'},
+  signal_processing:{bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
+  experimental_design:{bg:'#FAECE7',bc:'#F0997B',tc:'#712B13'},
+  pipeline_design:  {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'},
+  time_series:      {bg:'#EEEDFE',bc:'#AFA9EC',tc:'#3C3489'},
+  etl:              {bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
+  metrics:          {bg:'#FAEEDA',bc:'#EF9F27',tc:'#633806'},
+  uncertainty:      {bg:'#FCEBEB',bc:'#F09595',tc:'#791F1F'},
+  global_modeling:  {bg:'#FAECE7',bc:'#F0997B',tc:'#712B13'},
+  simulation:       {bg:'#EEEDFE',bc:'#AFA9EC',tc:'#3C3489'},
+  cross_functional: {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'},
+  data_pipeline:    {bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
+  anomaly_detection:{bg:'#FCEBEB',bc:'#F09595',tc:'#791F1F'},
+  case_study:       {bg:'#FAEEDA',bc:'#EF9F27',tc:'#633806'},
+  resilience:       {bg:'#FAECE7',bc:'#F0997B',tc:'#712B13'},
+  time_management:  {bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
+  prioritization:   {bg:'#EEEDFE',bc:'#AFA9EC',tc:'#3C3489'},
+  data_driven:      {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'},
+  growth:           {bg:'#FAEEDA',bc:'#EF9F27',tc:'#633806'},
+  conflict:         {bg:'#FCEBEB',bc:'#F09595',tc:'#791F1F'},
+  collaboration:    {bg:'#FAECE7',bc:'#F0997B',tc:'#712B13'},
+  adaptability:     {bg:'#E6F1FB',bc:'#85B7EB',tc:'#0C447C'},
+  leadership:       {bg:'#E1F5EE',bc:'#5DCAA5',tc:'#085041'}
 };
 
 const DIFF_COLORS = {
