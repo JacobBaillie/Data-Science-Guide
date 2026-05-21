@@ -170,7 +170,17 @@ Assumptions: linear X-Y relationship, normally distributed Y, constant residual 
 
 **Logistic Regression** — predicts binary outcomes (0 or 1) based on a single variable threshold. Validate by checking for stable error and realistic results.
 
-**Reciever Operating Characteristics (ROC)** — plot of TP vs FP for a binary classification model. Shows how sensitivity of the model changes FP/TP ratio to help find best option for needs.
+**Reciever Operating Characteristics (ROC) AUC** — plot of TP vs FP for a binary classification model. Shows how sensitivity of the model changes FP/TP ratio to help find best option for needs. Area under the curve (AUC) indicates model efficacy. Use for balanced data (50/50 pos/neg) 
+
+**Precision-Recall (PR) AUC** — plot of precision vs recal. Shows how sensitivity of the model changes R/C ratio to help find best option for needs. Area under the curve (AUC) indicates model efficacy. Use for imbalanced data (mostly pos or neg)
+
+**Log-Loss (cross-entropy)** — metric for quantifying model's ability to give the correct confidence in each prediction. Penalizes FN and FP in logarithmically with confidence (extreme for false high confidence).
+
+**Brier Score** — metric for quantifying model's ability to give the correct confidence in each prediction. Penalizes mean squared error between confidence and actual (less extreme than log-loss)
+
+Model accuracy/efficacy/discrimination abilty: how well the model chooses the class. (make a decision). Use metric AUC (ROC or PR). Can also use log-loss or brier score (mixed with calibration)
+Model calibration: how well the model predicts the probabilty of each class. (rank liklihoods). Use metric expected calibration error (ECE, deviation of cal plot from perfect 45 line) or maximum calibration error (MCE, largest deviations of cal plot ferom perfect 45 line). Can also use metric log-loss or brier score (data points score one at a time)
+For mental model and flow: 1. data visualized; 2. ROC or PR; 3. calibration plot.
 
 **Difference-in-Differences** — quantify the actual effect of a change by comparing at least two samples before and after the change (e.g. beta testers vs regular users).
 
@@ -190,15 +200,26 @@ Validate causal effect: correlate possible mediators with the overall effect and
 
 **Bagging** — boostrap aggregation. Pick subsample and regress. repeat for many random subsamples. Use the many results as a team to vote for an output
 
+**Stacking** — train multiple different models on the same data, then use those models together to generate an output.
+
 **Boosting** — regress, then repeat by using the error of this model by changing the weights of each feature.
 
 **Gradient Descent** — Use random starting weights for all features. Then consider which features are causing error in the output and push them by the amount they are hurting us. This is one step. Repeating many times until minimum reached.
 
+**Gradient Boosting** — Type of boosting in which the model function is compounded each time by training on the residual from the prior models instead of the main data. e.g. use for making decision trees.
+
+Boosting adds weights (either to function or data) based on loss, then try again. Gradient descent updates feature weights based on current error then makes a new model. Gradient boosting pushes residuals down by stacking models like trees.   
+
 **k-Means** — choose k points and assign data to closest point. Adjust until clusters are even. Requires spherical distribution of similar size and variance. Use when we don't know categories yet.
 
-**kNN** — given categories for data points with features, categorize a new data point by finding out which category it is "closest" to along each all features. Needs simple data, small feature size
+**kNN** — given categories for data points with features, categorize a new data point by finding out which category it is "closest" to along each all features. Needs simple data, small feature size. Handles interacting features.
 
-**Target Encoding — replace a catgegorical feature with a number by taking eg the average home price for all within that category: now we have average price in current city of current house + actual price of current house. If category size is small, the mean and single may be too correlated; use global mixutre instead.
+**Naive Bayes** — Unlike kNN which looks for nearby data, bayes considers each feature one at a time and decides how it predicts each label. Then multiply all the predictions. Independant features. Handles wide data.
+
+**Support Vector Machine (SVM)** — similar to k-means and kNN. Given lables, finds the hyperplane which best divides them into corect regions. Insenstivie to noise. Instead, focuses on the points near the border between labels, sacrificing extremely outliers unlike kNN.
+k-Means includes outliers to get a centroid and create groups. kNN starts with groups and decides which group is nearest. SVM starts with groups and decides on boundaries which most separate most of the data, only counting border points.
+
+**Target Encoding** — replace a catgegorical feature with a number by taking eg the average home price for all within that category: now we have average price in current city of current house + actual price of current house. If category size is small, the mean and single may be too correlated; use global mixutre instead.
 
 **Curse of dimensionality** — At very high D, the distance of each point from its category tends toward 1. It is exceedingly rare for a point to have average features in all directions (always find a extreme feature given enough features and normal distribution). Often these coffee ring like groups intersect the middle of other groups, causing misattribution of unknowns
 
@@ -408,7 +429,7 @@ Use random starting weights for all features. Then consider which features are c
 
 ### Wide and Tall Data (challenging)
 1. Study a subsample first
-2. Try incremental stradegies like incremental PCA or gradient descent
+2. Try incremental stradegies like incremental PCA or gradient descent or naive bayes
 
 ---
 
@@ -440,6 +461,31 @@ Use random starting weights for all features. Then consider which features are c
 
 ---
 
+## Things I missed
+
+\`\`\`python
+lst.insert(1, 'item')           				# insert at index (existing items shift right)
+del lst[3:5]                   					# delete slice in place
+lst.clear()                     				# empty the list (object still exists)
+words_lst = str.split()         				# split on whitespace → list of words
+str = "".join(words_lst)     					  # reassemble as string
+
+sorted(d.items(), key=lambda item: item[0], reverse=True)	  # Sort items by key (descending)
+sorted(d, key=d.get, reverse=True)				                  # Sort keys by value (descending)
+
+import heapq
+heap = []
+heapq.heappush(heap, num)
+heapq.heappop(heap)         
+
+from collections import deque
+dq = deque(iterable)
+dq.append(item)         # add right
+dq.appendleft(item)     # add left
+dq.pop()                # remove right
+dq.popleft()            # remove left  
+\`\`\`
+
 ## Primitives
 
 \`\`\`python
@@ -468,9 +514,6 @@ lst.extend([1, 2, 3])           # multi-append (each item individually)
 lst.sort()                      # sort in place
 sorted(lst)                     # returns the sorted list
 lst.index('item')               # index of first appearance
-
-lst.isalnum()                   # alphanumeric check (also works on chars)
-lst.lower()                     # lowercase
 \`\`\`
 
 ### Matrix / List of Lists
@@ -484,19 +527,23 @@ new_mat = [[None] * list_length for i in range(num_lists)]
 ## Strings
 
 \`\`\`python
-char.isalnum()                          # alphanumeric check
-string[start:end]                       # slicing
-string[::-1]                            # reverse
+str[start:end]                       # slicing
+str[::-1]                            # reverse
 
 new = old[:pos] + "abc" + old[pos:]     # insert substring at position
-sorted_list = sorted(string)            # returns sorted list of chars
-alpha_string = "".join(sorted_list)     # reassemble as string
+str = "".join(char_list)     # reassemble as string
 
 new = string.lower()
 new = string.replace(char, " ")         # replace all occurrences
 words = string.split()                  # split on whitespace → list of words
 
-test.find(" ") returns the index of the first instance of the specified char or string
+str.find(" ") returns the index of the first instance of the specified char or string
+
+str.isalnum()                   # alphanumeric check
+str.isnumeric()                 # numeric check
+str.isalpha()                   # alphabet check
+str.lower()                     # lowercase
+str.upper()                     # uppercase
 \`\`\`
 
 ---
@@ -657,6 +704,120 @@ bfs(queue, visited)
 - **Multiple queues/maps**: pass different \`queue\`/\`visited\` pairs to the same function
 - **Bidirectional BFS**: run forward + backward inside the same loop for faster search when start and end are both known`
   },
+
+  packages: {
+    title: "Pandas, NumPy, MatPlotLib",
+    content: `# Pandas, NumPy, MatPlotLib
+
+## Datraframes
+\`\`\`python
+df = pd.read_csv(path)
+
+\`\`\`
+### Make a new col based on another col
+\`\`\`python
+df['new_col'] = df['col'] < num
+df['new_col'] = df['col'].apply(lambda x: False if x > num else True)
+def function(num):
+    if num > 0:
+        return False
+    else
+        return True
+df['new_col'] = df['col'].apply(function)
+
+\`\`\`
+### Make a new df by grouping
+\`\`\`python
+agg_df = df.groupby('group_id').agg(
+    col1=('col', 'count'),
+    col2=('col', 'sum'),
+    col3=('col', lambda x: 100 * x.mean()), # percent true
+    col4=('col', lambda x: 100 * (x == num).mean()) # percent that equal num
+).reset_index()
+
+\`\`\`
+### Basic info and clean
+\`\`\`python
+shape = df.shape
+sorted_df = df.sort_values(by = 'col')
+col_list = df.columns
+df['col'].dtype
+df = df.rename(columns = {'old_name': 'new_name'})
+df['col'] = df['col'].astype(str)
+df['col'] = df['col'].fillna('Unknown')
+df = df.dropna()
+sample_df = df.sample(n = 1000, random_state = 1)
+df = df.drop(columns = ['col1',col2'])
+
+\`\`\`
+### Stats
+\`\`\`python
+df['col'].nunique()
+df['col'].value_counts()
+df['col'].min()
+df['col'].max()
+df['col'].mean()
+df['col'].median()
+df['col'].std()
+df['col'].var()
+n_nulls = df['col'].isnull().sum()
+df.describe(include='all').T
+correlation_matrix = df.corr
+correlation = df['col'].corr(df['target'])
+pct_true=('bool_col', lambda x: 100 * x.mean())
+\`\`\`
+### Joins
+\`\`\`python
+keys_df = key_df[['ID', 'item']]
+df = df.merge(keys_df, on='ID', how='left')
+df = added_df.merge(df, on='col', how='left', suffixes = ('', f'col')) # add suffix to avoid duplicate col names
+
+\`\`\`
+### Encode
+\`\`\`python
+df = pd.get_dummies(df, columns=['col'], drop_first=False, dtype='int64')
+\`\`\`
+
+## MatPlotLib
+\`\`\`python
+plt.style.use('default')        # Define a style to be used later to cleanup aesthetics modification in later cells
+
+\`\`\`
+### Single
+\`\`\`python
+fig, ax = plt.subplots()
+df['col'].value_counts().plot(kind = 'bar', ax = ax)
+ax.hist(df['col'], bins = 10)
+ax.scatter(df['col1'], df['col2'])
+
+\`\`\`
+### Multi
+\`\`\`python
+fig, axes = plt.subplots(n_height, n_width, figsize=(height, width))      
+axes = axes.flatten()           # Collapse the 2D array style into a 1D for single idx (i) rather than double idx ([i, j])
+df[col].value_counts().plot(kind='bar', ax=axes[i])
+axes[idx].hist(df['col'], bins = 10)
+axes[idx].scatter(df['col1'], df['col2'])
+
+\`\`\`
+###  Matrix
+\`\`\`python
+correlation_matrix = df.corr
+fig, ax = plt.subplots()
+im = ax.imshow(correlation_matrix.values)
+plt.colorbar(im, ax = ax)
+
+\`\`\`
+###  Further adjustments
+\`\`\`python
+axes[idx] .set_title('name')
+          .set_ylabel('name')
+          .set_yticklabels([])
+          .set_ylim(0, 10)
+          .axis('off') 
+`
+  },
+
 
   sql: {
     title: "SQL",
@@ -964,12 +1125,12 @@ Data pipeline EDA
 S. Our lab relies heavily on brute force data workup from multiple instruments for a variety of different experiments. We often spend hours in the middle of an experiment working up data to make decisions. Sometimes this takes too long, so we end up making a rash call without fully understanding the data. Although I could accept this workflow as many did before me, I wanted high standards.
 T. I wanted to improve the data analytics pipeline by tranforming the current system to both improve experiment efficiency, reducing costs, and also imporve the decision making process using more data to improve results. This should also serve to simplify the current software stack by consolidating everything into a more unviersal Python-based system.
 A. I worked with other users to make a list of all experiments, instruments, and data types relevant to the system in question. I also checked with everyone to make sure they would be happy with the switch to a new system. I outliined the framework in collaboration with a software tech first: python libraries for communication with the inputs (GPIB, USB), data storage using Postgres, and automatic analysis in Python. The simple UI enables selecting for the experiment type for data base information and automatic EDA. The EDA includes quick checks for parameters like SNR, baseline drift, anomaly detection, and outliers.
-R. I discussed the new process with users and everyone agreed that the new system is faster and more intuitive. On average users reported that they finished routine experiments ~50% faster, making more time for their specialized experiments. Also, the data base serves as a baseline standard for "good" data, ensuring high standards in the future.
+R. I discussed the new process with users and everyone agreed that the new system is faster and more intuitive. On average users reported that they finished routine experiments ~50% faster, making more time for their specialized experiments.
 
 ### Outside comfort zone, new skills
 Lab reservations
-Context for first time it comes up: We gained new instrumentation for a high use instrument table, so it was often getting booked over a month or more in advance, which makes quick turnaround on urgent projects impossible. It was also causing frustration among users and competition to collect more bookings. This snowballed, and at one point the table was booked 3 months out. I decided that although the demand has increased a lot due to new capabilities, this backlog is excessive. I intuitively already suspected it was due to a lack of oversight and rules and also that we were not utilizing the table efficiently. By improving utilization and improving policies, we can boost data output without increase the cost at all.
-S. We already adopted new rules around bookings: only book when you have an experiment, plan ahead and include details in the reservation, only book 2 days per week on high-use instruments. This was working, but I knew it was fragile and could be better. I need to find a way to better monitor bookings even after I graduate.
+Context for first time it comes up: new instrumentation for the most frequently used instrument table. booked months or more out, slows projects. frustration among users, competition to book. I decided that although the demand has increased a lot due to new capabilities, this backlog is excessive. intuition: lack of oversight and rules and poor utilization.
+S. We already adopted new rules around bookings: only book when you have an experiment, plan ahead and include details in the reservation, only book 2 days per week on high-use instruments. This was working, but I knew it was fragile. I need to find a way to better monitor bookings even after I graduate.
 T. I discussed with other users and found out most are very open to switching away from google calendar which is often hard to use and hard to monitor. I decided to create own instrument reservation system. Although I had no webdevelopment expererience, I knew this was the best solution in the long-run.
 A. I created a working reservation system using Cursor and Claude Code. I frequenly discussed different features, the UI, and managemnt opotions with labmates along the way to ensure everyone was supportive and satisfied. It had several improvments over the google calwendar systmem like easy monitoring of bookings, better mobile support, email services for booking rules, user-specific data tracking, and easy control of booking rules and limits.
 R. I finished the app in around 2 months and everyone started using it on the same day. I chatted with other users and they all agreed its much better. I also made detailed documentation in case someone wants to make changes in the future. The lab is still using this system and when I checked recently, they only have about 2 weeks of bookings.
@@ -980,15 +1141,15 @@ R. I finished the app in around 2 months and everyone started using it on the sa
 Instrument layout
 S. New research directions required changes to the instrument layout for part of our labspace to ensure efficiency. This included around 15 instruments and numerous supporting equipment for about 6 key measurement types.
 T. Determine the best instrument layout for current and future needs.
-A. I worked with labmates to brainstorm all the experiments we would likely perform in the future and their dependencies. There was no single best layout because each served some experiments better than others. So, users were in favor of the layout that tended to benefit their own lab work more. For example, I preferred layout A whereas a labmate preferred layout B. I can recognize both have benefits, but I knew layout A was actually superior because it better suited the much more frequent measurement types. Layout A could be tweaked slightly to accomodate, and it would take about an hour extra each time. This was a big ask for the other user because they would be subject to this hour each time they run an experiment. However, layout B was actually incompatible with a more popular measurement. I wanted to get the user on board with my layout, so I first sat down with them and discussed their futuure project directions. I helped them see than they would soon be needing these capabilities and although the layout will take more time now, it will improve their data overall in the long-run. Our lab has high standards for our publications so better data is always the priority. They agreed, but we wanted to make sure the also that the layout was objectively better using numbers. The two of us worked together to quantify the time impact of each layout on each measurement. In the end, layout A was about 25% more efficient than layout B.
+A. I worked with labmates to brainstorm all the experiments we would likely perform in the future and their dependencies. There was no single best layout. I preferred layout A whereas a labmate preferred layout B. I can recognize both have benefits, but I knew layout A was actually superior because it better suited the much more frequent measurement types. Layout A could be tweaked slightly to accomodate, and it would take about an hour extra each time. This was a big ask for the other user because they would be subject to this hour each time they run an experiment. However, layout B was actually incompatible with a more popular measurement. I helped them see that they would soon be needing these capabilities and although the layout will take more time now, it will improve their data overall in the long-run. We also worked together to quantify the difference. In the end, layout A was about 25% more efficient than layout B.
 R. The lab was able to unify in choosing layout A. By earning that other user's trust, they volunteered to help set up, so they were able to give helpful tips that benefitted everyone.
 
 ### Different workstyle
 Planner vs Go with the flow
-S. Everyone has a different work style. Some are detail oriented and have specific routines. Others are more flexible and take things hour by hour by feel. I tend to prefer to plan ahead with more detail and anticipate what I want to accomplish each day. I plan to start at a certain time and finish a certain set of tasks. So, when I was working on a collaboration with a labmate who prefers to make decisions at the last minute, we sometimes had disagreements. We had to perform some highlty complex measurements as a team because we were each experts with a potion of the measurement. However, he would often arrive late on the day of our experiment or suddenly decide to break for lunch in the middle of a measurement. On the other hand, I would sometimes have to leave early for other responsibilities. All this lead to slower progress becasue we had different work styles.
+S. Everyone has a different work style. Some are detail oriented and have specific routines. Others are more flexible and take things hour by hour by feel. I tend to prefer to plan ahead with more detail and anticipate what I want to accomplish each day. I plan to start at a certain time and finish a certain set of tasks. So, when I was working on a collaboration with a labmate who prefers making decisions on the fly, we had disagreements. We had to perform an experiment together, but he would often arrive late on the day of our experiment or suddenly decide to break for lunch in the middle of a measurement. All this lead to slower progress.
 T. I wanted to find a way to work with him more efficiently to improve our project speed and save resouces on the high-demand instrument. This would help our project and also save days for others to use the instrument.
-A. I sat down with him and explained my perspective on planning the workday and keeping to our scheduled commitments. I recognized that he is also highly efficient and successful in this projects, but when working as a team, we must accomodate each other to work efficiently togother. 
-R. He understood pretty much right away and he actually was pleased that I came to him directly in this way. Upfront and direct. He said he feels like others in the lab treat him differently because they think he doesn't work that hard, but they never actually bring it up with him. I pointed out that he was actually doing the same thing as them: being avoidant. I suggested he confront those other labmates himself if he feels like things are awkward. I found out he ended up talking to them about, but I don't know the details. They seemed more cordial.
+A. I sat down with him and explained my perspective on planning the workday and keeping to commitments. I recognized that he is also highly efficient and successful in this projects, but when working as a team, we have to accomodate each other to be efficient. 
+R. He understood pretty much right away and he actually was pleased that I came to him directly in this way. He said he thinks others in the lab treat him differently because they think he doesn't work that hard, but they never actually bring it up with him. I pointed out that he was actually doing the same thing as them: being avoidant. I suggested he confront those other labmates. I found out he ended up talking to them, but I don't know the details. At least, they seemed more cordial.
 
 ### Managing a Team project 
 Final project
@@ -1003,9 +1164,9 @@ R. This type of contstant self review and communication is crucial. Others are o
 
 ### Motivate a team to follow
 Lab reservations
-Context for first time it comes up: We gained new instrumentation for a high use instrument table, so it was often getting booked over a month or more in advance, which makes quick turnaround on urgent projects impossible. It was also causing frustration among users and competition to collect more bookings. This snowballed, and at one point the table was booked 3 months out. I decided that although the demand has increased a lot due to new capabilities, this backlog is excessive. I intuitively already suspected it was due to a lack of oversight and rules and also that we were not utilizing the table efficiently. By improving utilization and improving policies, we can boost data output without increase the cost at all.
-S. I was discussing ways to improve insturment utilization with the lab to improve turn-around times and reduce the backlog on the Table. My guess was if we required more booking details and don't overbook, users would be more prepared and use their time more efficiently. Some gave pushback claiming they are using the instrument efficiently even without putting detail in the booking. Others worried that certain users would continue overbooking because I have no proof, making things unfair. I tried to talk to them and ensure that I would work with users to ensure they follow the new rules, but I had to accept the criticism even though I knew my perspective was likely valid.
-T. To motivate the lab, I had to prove myself with data.
+Context for first time it comes up: new instrumentation for the most frequently used instrument table. booked months or more out, slows projects. frustration among users, competition to book. I decided that although the demand has increased a lot due to new capabilities, this backlog is excessive. intuition: lack of oversight and rules and poor utilization.
+S. My guess was if we required more booking details and don't overbook, users would be more prepared and efficient. Some gave pushback. They thought they were already efficient or they thought the new rules would be unfair. 
+T. I had to accept the criticism. So to motivate the lab, I had to prove myself with data.
 A. I analyzed past bookings and usage data. I  mapped the file count to data and reservation details. I model these data to analyze the relationship between booking details on file count and found a correlation. About 2% more usage per word and nearly double usage when mentioning a key light source. I quickly brought it up in a meeting and required that anyone booking include detailed notes in their reservation and only book if you actual know what experiment you are doing. We also made a weekly maximum of 2 days booked.
 R. Everyone came on board after seeing the data and after a few weeks, the backlog was down to just about a month. I was still curious about one thing: was improvement a coincidence? This study was just correlation, afterall. To prove to myself and the team that we made the right call, I performed causal inference months later. I found that indeed, the utilization increased by ~50% and nearly 100% of this increase is directly caused by increased reservation detail hinging around the policy date.
 
@@ -1024,8 +1185,8 @@ R. I finished my thesis 3 weeks in advance, allowing plenty of time for practice
 
 ### Present a complex project
 S. My work has always been highly complex and I usually present to crowds who know little of the field I work in, so I've learned techniques for presenting. For example, I presented my work at a university workshop in which there were students and professors from various STEM labs totally unfamiliar with my field.
-T. I had to prepare a clear story to convey main ideas to inexperienced listeners while also hitting the key findings for relevant professors.
-A. I always start on paper and draw pickture of the key results I want to convey. Then I try talking through the finds out loud until the order makes sense. Then I draft a presentation. I aim to make only one point on each slide to keep to simple. No matter the preparation, sometimes the message may still be unclear to some. In this case, I make sure to emphasize the most compelx or most important findings at the end just before opening up to questions so its fresh in their mind.
+T. I had to prepare a clear story to convey the big picture ideas to nonscientist and complex findings to scientists.
+A. I always start on paper and draw picture of the key results I want to convey. Then I try talking through the finds out loud until the order makes sense. Then I draft a presentation. I aim to make only one point on each slide to keep to simple. No matter the preparation, the message may still be unclear to some. In this case, I make sure to restate the most complex or most important findings at the end just before opening up to questions so its fresh in their mind.
 R. I presented my work and several people came up to me to compliment the clarity and helpful illustrations I used. We were also able to start a new collboration with a computational group.
 `
   },

@@ -1,0 +1,1 @@
+const PACKAGES_DATA = [];

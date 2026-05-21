@@ -5,6 +5,7 @@ const CATEGORIES = {
   my_projects:            { title: "My Projects",             data: MY_PROJECTS_DATA },
   behavioral:             { title: "Behavioral",              data: BEHAVIORAL_DATA },
   python:                 { title: "Python",                   data: PYTHON_DATA },
+  packages:               { title: "Pandas, NumPy, MatPlotLib", data: PACKAGES_DATA },
   sql:                    { title: "SQL",                      data: SQL_DATA },
   web_development:        { title: "Web Development",          data: WEB_DEV_DATA }
 };
